@@ -234,6 +234,10 @@ configure_package() {
   else
     KODI_ARCH="-DWITH_ARCH=${TARGET_ARCH}"
   fi
+  
+  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" -o "$DEVICE" = "Slice4s" ]; then
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET slice-led-tools"
+  fi
 
   if [ "${PROJECT}" = "Allwinner" -o "${PROJECT}" = "Rockchip" -o "${PROJECT}" = "RPi" ]; then
     PKG_PATCH_DIRS+=" drmprime-filter"
@@ -311,6 +315,8 @@ make_host() {
 
 makeinstall_host() {
   DESTDIR=${SYSROOT_PREFIX} cmake -DCMAKE_INSTALL_COMPONENT="kodi-addon-dev" -P cmake_install.cmake
+  
+  
 
   # more binaddons cross compile badness meh
   sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR ${SYSROOT_PREFIX}/usr/include/kodi:g" \
@@ -433,6 +439,10 @@ post_makeinstall_target() {
 
   if [ "${DRIVER_ADDONS_SUPPORT}" = "yes" ]; then
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.program.driverselect" ${ADDON_MANIFEST}
+  fi
+  
+  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" -o "$DEVICE" = "Slice4s" ]; then
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" $ADDON_MANIFEST
   fi
 
   # more binaddons cross compile badness meh
