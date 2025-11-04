@@ -440,6 +440,8 @@ if [ "${1}" = "release" ] || [ "${1}" = "mkimage" ] || [ "${1}" = "noobs" ]; the
         cp -PR "${INSTALL}/usr/share/bootloader/$f" "${RELEASE_DIR}/${NOOBS_DISTRO}/System/"
       fi
     done
+    
+    [ -f ${INSTALL}/usr/share/bootloader/dt-blob.bin ] && cp -PR ${INSTALL}/usr/share/bootloader/dt-blob.bin ${RELEASE_DIR}/${NOOBS_DISTRO}/System/dt-blob.bin
 
     # Copy system files
     cp ${TARGET_IMG}/${IMAGE_NAME}.system ${RELEASE_DIR}/${NOOBS_DISTRO}/System/SYSTEM
