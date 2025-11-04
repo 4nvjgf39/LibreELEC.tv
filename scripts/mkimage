@@ -227,6 +227,10 @@ EOF
       mcopy "${distro}" ::/"${distro##*/}" >"${SAVE_ERROR}" 2>&1 || show_error
     fi
   done
+  
+  if [ -f "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ]; then
+    mcopy "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ::
+  fi
 
   for dtb in "${RELEASE_DIR}/3rdparty/bootloader/"*.dtb; do
     if [ -f "${dtb}" ]; then
