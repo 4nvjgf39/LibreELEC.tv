@@ -235,8 +235,8 @@ configure_package() {
     KODI_ARCH="-DWITH_ARCH=${TARGET_ARCH}"
   fi
   
-  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" -o "$DEVICE" = "Slice4s" ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET slice-led-tools"
+  if [ "${DEVICE}" = "Slice" -o "${DEVICE}" = "Slice3" -o "${DEVICE}" = "Slice4s" ]; then
+    PKG_DEPENDS_TARGET+=" slice-led-tools"
   fi
 
   if [ "${PROJECT}" = "Allwinner" -o "${PROJECT}" = "Rockchip" -o "${PROJECT}" = "RPi" ]; then
@@ -441,8 +441,8 @@ post_makeinstall_target() {
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.program.driverselect" ${ADDON_MANIFEST}
   fi
   
-  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" -o "$DEVICE" = "Slice4s" ]; then
-    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" $ADDON_MANIFEST
+  if [ "${DEVICE}" = "Slice" -o "${DEVICE}" = "Slice3" -o "${DEVICE}" = "Slice4s" ]; then
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" ${ADDON_MANIFEST}
   fi
 
   # more binaddons cross compile badness meh

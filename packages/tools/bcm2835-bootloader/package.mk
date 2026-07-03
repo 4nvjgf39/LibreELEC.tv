@@ -29,6 +29,8 @@ makeinstall_target() {
         ;;
     esac
 
+    find_file_path config/dt-blob.bin ${PKG_DIR}/files/dt-blob.bin && cp -PRv ${FOUND_PATH} ${INSTALL}/usr/share/bootloader
+    
     find_file_path bootloader/update.sh ${PKG_DIR}/files/update.sh && cp -PRv ${FOUND_PATH} ${INSTALL}/usr/share/bootloader
 
     if find_file_path bootloader/canupdate.sh; then

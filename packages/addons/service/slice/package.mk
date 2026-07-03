@@ -16,11 +16,13 @@ PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="embedded"
 PKG_ADDON_NAME="Slice"
-PKG_ADDON_PROJECTS="Slice Slice3"
+PKG_ADDON_PROJECTS="Slice Slice3 Slice4s"
 PKG_ADDON_TYPE="xbmc.service"
 
 makeinstall_target() {
   install_addon_files "${INSTALL}/usr/share/kodi/addons/${PKG_SECTION}.${PKG_NAME}"
+#  mkdir -p ${INSTALL}/usr/share/kodi/addons/${PKG_SECTION}.${PKG_NAME}
+#  cp -rP ${PKG_BUILD}/addon/* ${INSTALL}/usr/share/kodi/addons/${PKG_SECTION}.${PKG_NAME}
 }
 
 addon() {
