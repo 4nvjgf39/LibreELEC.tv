@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="slice-ws2812"
-PKG_VERSION="2996ff5"
-PKG_SHA256="fbde85a42e36fbbc5a9f560956fe1758eb89b86a2360d0395c6b8ff942c78814"
+PKG_VERSION="487abec"
+PKG_SHA256="98007df780cb5ea30def220b8071ddc042cefa398810bff27acabaf461a7ac30"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/4nvjgf39/slice-ws2812"
 PKG_URL="https://github.com/4nvjgf39/slice-ws2812/archive/${PKG_VERSION}.tar.gz"

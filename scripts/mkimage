@@ -229,7 +229,7 @@ EOF
   done
   
   if [ -f "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ]; then
-    mcopy "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ::
+    mcopy "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" :: >"${SAVE_ERROR}" 2>&1 || show_error
   fi
 
   for dtb in "${RELEASE_DIR}/3rdparty/bootloader/"*.dtb; do
