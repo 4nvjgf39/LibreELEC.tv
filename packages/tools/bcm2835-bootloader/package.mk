@@ -17,7 +17,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/share/bootloader
     cp -PRv LICENCE* ${INSTALL}/usr/share/bootloader
     case "${DEVICE}" in
-      RPi4)
+      RPi4 | Slice4s)
         cp -PRv fixup4x.dat ${INSTALL}/usr/share/bootloader/fixup.dat
         cp -PRv start4x.elf ${INSTALL}/usr/share/bootloader/start.elf
         ;;
