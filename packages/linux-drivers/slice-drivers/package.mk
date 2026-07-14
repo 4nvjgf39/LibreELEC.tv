@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="slice-drivers"
-PKG_VERSION="ad6de5f7da9fe8286e1f529cfd3f1ab5408bf979"
-PKG_SHA256="1bfbb7767f67969ec12e8b8146bc665b588b6ab721e543b9e5da291a4deac292"
+PKG_VERSION="4ffea43af96caab775a131ef98f5df3f2cc386e3"
+PKG_SHA256="fe370fdf4c387e96231da39862473f2d321ea67cda9fa22b2afe05dd0048e93d"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/HiassofT/slice-drivers"
 PKG_URL="https://github.com/HiassofT/slice-drivers/archive/${PKG_VERSION}.tar.gz"
