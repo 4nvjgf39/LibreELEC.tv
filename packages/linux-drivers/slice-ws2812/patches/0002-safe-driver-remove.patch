@@ -1,0 +1,19 @@
+Subject: [PATCH] slice-ws2812: terminate DMA before releasing the channel
+
+ws2812_remove() releases the DMA channel without first ensuring any
+in-flight transfer is stopped. Under module reload / device teardown
+this can race with an active DMA transfer and crash. Call
+dmaengine_terminate_sync() before dma_release_channel() to make
+teardown safe.
+
+diff --git a/ws2812.c b/ws2812.c
+--- a/ws2812.c
++++ b/ws2812.c
+@@ -521,6 +521,7 @@ static void ws2812_remove(struct platform_device *pdev)
+ 
+ 	if (state->dma_chan)
+ 	{
++		dmaengine_terminate_sync(state->dma_chan);
+ 		dma_release_channel(state->dma_chan);	
+ 	}
+ 

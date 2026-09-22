@@ -26,3 +26,7 @@
     
   # Additional drivers
     ADDITIONAL_DRIVERS="${ADDITIONAL_DRIVERS} slice-drivers slice-ws2812"
+
+  # enable diskmounter support (udevil) so external/internal USB drives
+  # (e.g. the internal storage HDD) are automounted, matching stock behavior
+    UDEVIL="yes"
