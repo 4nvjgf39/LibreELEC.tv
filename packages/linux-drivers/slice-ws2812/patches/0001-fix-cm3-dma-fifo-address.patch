@@ -1,0 +1,40 @@
+Subject: [PATCH] slice-ws2812: fix DMA FIFO address on Compute Module 3
+
+Commit 487abec ("Fix DMA bus address for Compute Module 3 - add
+BCM2835_VCMMU_SHIFT offset") tried to fix the WS2812 LEDs on CM3 by
+adding BCM2835_VCMMU_SHIFT to the PWM FIFO bus address returned from
+the device tree "reg" property. In practice this produces a DMA FIFO
+address the DMA engine cannot actually reach on CM3 (BCM2837), and the
+LEDs stay dark even though DMA submissions succeed without error.
+
+Verified on hardware (webcam brightness measurement, on/off/color
+sweep) that the DMA engine on CM3 requires the ARM *physical* address
+of the PWM peripheral (0x3fxxxxxx), not the VideoCore bus address
+(0x7exxxxxx) with an extra VCMMU shift applied on top of it. Compute
+the correct physical FIFO address directly instead.
+
+diff --git a/ws2812.c b/ws2812.c
+--- a/ws2812.c
++++ b/ws2812.c
+@@ -94,7 +94,10 @@ struct ws2812_state {
+  #define BCM2708_PERI_BASE 0x20000000
+ #endif
+ 
+-#define BCM2835_VCMMU_SHIFT		(0x7E000000 - BCM2708_PERI_BASE)
++/* CM3 (BCM2837) ARM physical peripheral base; DMA needs the physical
++ * address here, not the VideoCore bus address used elsewhere. */
++#define CM3_PERI_PHYS_BASE		0x3f000000
++#define BCM2835_BUS_BASE		0x7e000000
+ 
+ /* Each LED is controlled with a 24 bit RGB value
+  * each bit is created from a nibble of data either
+@@ -467,7 +470,8 @@ static int ws2812_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/* request a DMA channel */
+-	cfg.dst_addr = state->phys_addr + PWM_FIFO1 + BCM2835_VCMMU_SHIFT;
++	cfg.dst_addr = state->phys_addr - BCM2835_BUS_BASE +
++		       CM3_PERI_PHYS_BASE + PWM_FIFO1;
+ 	ret = dmaengine_slave_config(state->dma_chan, &cfg);
+ 	if (ret < 0)
+ 	{
