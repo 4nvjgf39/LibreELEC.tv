@@ -1,5 +1,5 @@
 ################################################################################
-# Device defaults
+# setup device defaults
 ################################################################################
 
   # The TARGET_CPU variable controls which processor should be targeted for
@@ -24,7 +24,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
     FIRMWARE="${FIRMWARE} slice-firmware"
     
-  # Additional drivers
+  # enable the slice audio driver and LEDs
     ADDITIONAL_DRIVERS="${ADDITIONAL_DRIVERS} slice-drivers slice-ws2812"
 
   # enable diskmounter support (udevil) so external/internal USB drives
